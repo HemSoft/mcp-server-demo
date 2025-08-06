@@ -21,3 +21,10 @@ public static class EchoTool
     [McpServerTool, Description("Echoes in reverse the message sent.")]
     public static string ReverseEcho(string message) => new string(message.Reverse().ToArray());
 }
+
+[McpServerResourceType]
+public static class EchoResource
+{
+    [McpServerResource, Description("A simple text resource.")]
+    public static string Text => "Hello from C#";
+}
