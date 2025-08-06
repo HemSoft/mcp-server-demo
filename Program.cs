@@ -26,5 +26,5 @@ public static class EchoTool
 public static class EchoResource
 {
     [McpServerResource, Description("A simple text resource.")]
-    public static string Text => "Hello from C#";
+    public static string GetText() => "Hello from C#";
 }
