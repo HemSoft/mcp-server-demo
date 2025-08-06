@@ -165,6 +165,87 @@ To add new resources:
 2. Decorate with `[McpServerResource]` and `[Description]` attributes
 3. Rebuild and restart the server
 
+## Testing
+
+This project includes comprehensive testing infrastructure to ensure code quality and provide examples of MCP server testing patterns.
+
+### Running Tests
+
+```bash
+# Run all tests
+dotnet test
+
+# Run tests with detailed output
+dotnet test --verbosity normal
+
+# Run tests with code coverage
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+### Test Structure
+
+The test project follows best practices with organized test categories:
+
+- **Unit Tests**: Test individual components in isolation
+  - `Tools/EchoToolTests.cs`: Tests for Echo and ReverseEcho tools
+  - `Resources/EchoResourceTests.cs`: Tests for text resource functionality
+- **Integration Tests**: Test MCP server functionality end-to-end
+  - `Integration/McpServerIntegrationTests.cs`: Server startup and component integration
+- **Test Utilities**: Shared constants and helper methods
+  - `TestUtilities/TestConstants.cs`: Common test data and expected results
+
+### Testing Best Practices Demonstrated
+
+- ✅ **Clear naming**: `Method_Scenario_ExpectedResult` pattern
+- ✅ **Arrange-Act-Assert** pattern in all tests
+- ✅ **Parameterized tests** using `[Theory]` and `[InlineData]`
+- ✅ **No magic strings** - constants defined in `TestConstants`
+- ✅ **Comprehensive coverage** of edge cases (null inputs, empty strings)
+- ✅ **Integration testing** for MCP server components
+- ✅ **Fluent assertions** for readable test assertions
+
+### Adding New Tests
+
+When adding new MCP tools or resources:
+
+1. **Create unit tests** in the appropriate folder (`Tools/` or `Resources/`)
+2. **Test edge cases** including null inputs, empty strings, and boundary conditions
+3. **Add integration tests** if the component interacts with the MCP server
+4. **Update test constants** if you introduce new test data
+5. **Follow naming conventions** and use Arrange-Act-Assert pattern
+
+Example test structure:
+```csharp
+[Theory]
+[InlineData("input", "expectedOutput")]
+[InlineData("", "expectedForEmpty")]
+public void MethodName_WithScenario_ReturnsExpectedResult(string input, string expected)
+{
+    // Arrange - Set up test data
+
+    // Act - Execute the method under test
+    var actual = MethodUnderTest(input);
+
+    // Assert - Verify the result
+    actual.Should().Be(expected);
+}
+```
+
+## Continuous Integration
+
+This project uses GitHub Actions for automated testing and builds:
+
+- **Automated Testing**: All tests run on every push and pull request
+- **Multi-Platform Builds**: Builds and publishes artifacts for Linux and Windows
+- **Code Coverage**: Tracks test coverage and reports to Codecov
+- **Quality Gates**: Pull requests must pass all tests before merging
+
+The CI/CD pipeline ensures code quality and prevents regressions by:
+1. Running all unit and integration tests
+2. Building the project in Release configuration
+3. Publishing platform-specific artifacts
+4. Collecting and reporting code coverage metrics
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.

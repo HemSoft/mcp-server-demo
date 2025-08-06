@@ -13,4 +13,8 @@
     <PackageReference Include="ModelContextProtocol" Version="0.2.0-preview.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="mcp-server-demo.Tests/**" />
+  </ItemGroup>
+
 </Project>
