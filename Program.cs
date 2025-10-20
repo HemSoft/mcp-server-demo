@@ -33,7 +33,7 @@ public static class EchoTool
     {
         // This demonstrates elicitation: calling back to the client's LLM
         var chatClient = thisServer.AsSamplingChatClient();
-        
+
         var response = await chatClient.GetResponseAsync(
             new ChatMessage(ChatRole.User, $"Analyze this text and provide 2-3 key insights:\n\n{text}"),
             new ChatOptions { MaxOutputTokens = 256 },
@@ -47,7 +47,7 @@ public static class EchoTool
 public static class EchoResource
 {
     [McpServerResource, Description("A simple text resource.")]
-    public static string GetText() => "Hello from C#";
+    public static string GetText() => "This can be any helpful resource like links etc.";
 }
 
 [McpServerPromptType]
