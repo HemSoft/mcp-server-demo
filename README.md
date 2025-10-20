@@ -6,6 +6,7 @@ A sample Model Context Protocol (MCP) server built with C# and .NET that demonst
 
 - **Echo Tool**: Returns a greeting message with the input text
 - **ReverseEcho Tool**: Returns the input text with characters reversed
+- **AnalyzeWithElicitation Tool**: Demonstrates server elicitation by calling the client's LLM for analysis
 - **Text Resource**: Provides a simple text resource for AI assistants
 - **Prompt Templates**: Reusable prompt templates for text summarization, sentiment analysis, and idea generation
 - Built with ModelContextProtocol.Server v0.4.0-preview.2
@@ -116,12 +117,31 @@ To use this server with Claude Desktop:
   - `message` (string): The message to reverse
 - **Example**: Input "Hello World" returns "dlroW olleH"
 
+### AnalyzeWithElicitation
+- **Description**: Analyzes text by calling back to the client's LLM (demonstrates elicitation/sampling)
+- **Parameters**:
+  - `text` (string): The text to analyze
+- **Example**: Input "The project launched successfully" returns key insights extracted by the client's LLM
+- **Advanced**: This tool demonstrates MCP elicitation - the server calls the client's LLM to get intelligent analysis, then returns the result
+
 ## Available Resources
 
 ### Text Resource
 - **Description**: Provides a simple text resource that returns "Hello from C#"
 - **URI**: Can be accessed through MCP resource calls
 - **Usage**: AI assistants can retrieve this resource to get the static text content
+
+## Elicitation (Sampling)
+
+**Elicitation** is when an MCP server calls back to the client's LLM to get intelligent responses during tool execution. This enables servers to leverage the client's language model for dynamic analysis or processing.
+
+The `AnalyzeWithElicitation` tool demonstrates this pattern by:
+1. Receiving user input (text to analyze)
+2. Calling back to the client's LLM via `thisServer.AsSamplingChatClient()`
+3. Sending a prompt to the LLM
+4. Returning the LLM's response to the user
+
+This is different from prompts, which are static templates. Elicitation enables dynamic, context-aware server behavior.
 
 ## Available Prompts
 
@@ -154,7 +174,7 @@ Once connected to an MCP host, you can test the tools by asking the AI assistant
 
 - "Echo the message 'Hello MCP'"
 - "Reverse the string 'Once upon a time'"
-- "Use the echo tool to say something"
+- "Analyze this text with the AnalyzeWithElicitation tool: [your text here]"
 
 You can test the resource by asking the AI assistant to:
 

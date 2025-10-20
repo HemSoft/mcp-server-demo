@@ -4,6 +4,7 @@ using ModelContextProtocol.Server;
 using System.ComponentModel;
 
 using Microsoft.Extensions.AI;
+using ModelContextProtocol;
 
 var builder = Host.CreateEmptyApplicationBuilder(settings: null);
 
@@ -23,6 +24,23 @@ public static class EchoTool
 
     [McpServerTool, Description("Echoes in reverse the message sent.")]
     public static string ReverseEcho(string message) => new string(message.Reverse().ToArray());
+
+    [McpServerTool, Description("Analyzes text using the client's LLM via elicitation (sampling).")]
+    public static async Task<string> AnalyzeWithElicitation(
+        McpServer thisServer,
+        [Description("The text to analyze")] string text,
+        CancellationToken cancellationToken = default)
+    {
+        // This demonstrates elicitation: calling back to the client's LLM
+        var chatClient = thisServer.AsSamplingChatClient();
+        
+        var response = await chatClient.GetResponseAsync(
+            new ChatMessage(ChatRole.User, $"Analyze this text and provide 2-3 key insights:\n\n{text}"),
+            new ChatOptions { MaxOutputTokens = 256 },
+            cancellationToken);
+
+        return response?.Text ?? "No response from LLM";
+    }
 }
 
 [McpServerResourceType]
