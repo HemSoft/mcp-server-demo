@@ -1,5 +1,9 @@
 # MCP Server Demo
 
+[![Set it Free Loop](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FHemSoft%2Fmcp-server-demo%2Fmain%2Fsfl.json&query=%24.version&prefix=v&label=Set%20it%20Free%20Loop&color=FFD700&style=flat&logo=githubactions&logoColor=white)](https://github.com/HemSoft/set-it-free-loop)
+<!-- SFL_BADGE: auto-updated by deploy-workflow.ps1 -->
+# MCP Server Demo
+
 A sample Model Context Protocol (MCP) server built with C# and .NET that demonstrates how to create custom tools and resources for AI assistants. This server provides two simple tools (Echo and ReverseEcho) and one resource (Text).
 
 ## Features
